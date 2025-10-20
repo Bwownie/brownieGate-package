@@ -88,3 +88,15 @@ class brownieGate:
                 return False
         else:
             raise Exception('Error contacting API.')
+        
+    def get_user_data(self, required_data: dict):
+        """sumary_line
+        
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+        validate_url = f'{self.base_url}/api/get_user_data'
+        response = requests.post(validate_url, headers=self.base_headers, params={
+            'required_data': required_data,
+        })
