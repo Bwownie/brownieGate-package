@@ -49,10 +49,13 @@ class brownieGate:
         Returns:
             dict: The decrypted and parsed JSON payload.
         """
-        fernet = Fernet(self.encryption_key.encode())
-        payload = unquote(payload)
-        decrypted = fernet.decrypt(payload.encode()).decode()
-        return json.loads(decrypted)
+        try:
+            fernet = Fernet(self.encryption_key.encode())
+            payload = unquote(payload)
+            decrypted = fernet.decrypt(payload.encode()).decode()
+            return json.loads(decrypted)
+        except Exception as e:
+            raise Exception(e)
 
     def verify_payload(self, decrypted_payload: dict):
         """
@@ -62,12 +65,11 @@ class brownieGate:
             decrypted_payload (dict): The JSON payload obtained after decryption.
 
         Returns:
-            tuple: (bool, str) — whether the payload is valid and an explanatory message.
+            tuple: (bool, str) - whether the payload is valid and the users ID.
         """
         token_time = datetime.fromisoformat(decrypted_payload.get('timestamp'))
         now = datetime.now()
 
-        # Token must be within ±1 minute of current time
         if token_time > now + timedelta(minutes=1):
             return False, 'Code is out of date'
         if token_time < now - timedelta(minutes=1):
@@ -81,9 +83,8 @@ class brownieGate:
         if response.status_code == 200:
             result = response.json()
             if result.get('validated'):
-                result.pop('validated')
-                return True, result
+                return True, result.get('user_id')
             else:
-                return False, 'User not authenticated'
+                return False
         else:
-            return False, 'Error contacting API'
+            raise Exception('Error contacting API.')
