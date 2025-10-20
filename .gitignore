@@ -1,2 +1,3 @@
 *.pyc
 *browniegate/__pycache__
+*browniegate/browniegate.egg-info
