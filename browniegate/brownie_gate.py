@@ -85,18 +85,30 @@ class brownieGate:
             if result.get('validated'):
                 return True, result.get('user_id')
             else:
-                return False
+                return False, ''
         else:
             raise Exception('Error contacting API.')
         
-    def get_user_data(self, required_data: dict):
+    def get_user_data(self, user_id: str):
         """sumary_line
         
         Keyword arguments:
         argument -- description
         Return: return_description
         """
-        validate_url = f'{self.base_url}/api/get_user_data'
-        response = requests.post(validate_url, headers=self.base_headers, params={
-            'required_data': required_data,
-        })
+        try:
+            validate_url = f'{self.base_url}/api/get_user_data'
+            response = requests.post(validate_url, headers=self.base_headers, params={
+                'user_id': user_id
+            })
+            
+            if response.status_code == 200:
+                result = response.json()
+                if result.get('validated'):
+                    result.pop('validated')
+                    return True, result
+                else:
+                    return False, ''
+                
+        except Exception as e:
+            raise Exception(str(e))

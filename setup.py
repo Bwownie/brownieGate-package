@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='browniegate',
-    version='0.1.1',
+    version='0.1.3',
     packages=find_packages(),
     description='A secure API client for handling encrypted payloads and authentication.',
     long_description=open('README.md', encoding='utf-8').read(),
