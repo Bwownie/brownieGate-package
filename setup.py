@@ -9,7 +9,7 @@ setup(
     long_description_content_type='text/markdown',
     author='Jethro Mackay',
     author_email='jethrolovespancake@gmail.com',
-    url='',  # Add your GitHub repo link here when ready (e.g., 'https://github.com/jethromackay/browniegate')
+    url='https://github.com/Bwownie/brownieGate-package',
     license='MIT',
     install_requires=[
         'requests>=2.31.0',
