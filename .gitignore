@@ -1,3 +1,5 @@
 .pyc
 browniegate/__pycache__
-browniegate/browniegate.egg-info
+browniegate.egg-info
+browniegate/__pycache__/brownie_gate.cpython-311.pyc
+browniegate.egg-info/PKG-INFO

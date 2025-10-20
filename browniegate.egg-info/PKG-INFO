@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: browniegate
-Version: 0.1.1
+Version: 0.1.7
 Summary: A secure API client for handling encrypted payloads and authentication.
 Home-page: https://github.com/Bwownie/brownieGate-package
 Author: Jethro Mackay

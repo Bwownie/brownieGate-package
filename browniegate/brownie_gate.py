@@ -3,6 +3,7 @@ import json
 from cryptography.fernet import Fernet
 from urllib.parse import unquote
 from datetime import datetime, timedelta
+import ast
 
 class brownieGate:
     """
@@ -71,9 +72,9 @@ class brownieGate:
         now = datetime.now()
 
         if token_time > now + timedelta(minutes=1):
-            return False, 'Code is out of date'
+            return False, ''
         if token_time < now - timedelta(minutes=1):
-            return False, 'Code is out of date'
+            return False, ''
 
         validate_url = f'{self.base_url}/api/validate'
         response = requests.post(validate_url, headers=self.base_headers, params={
@@ -87,7 +88,7 @@ class brownieGate:
             else:
                 return False, ''
         else:
-            raise Exception('Error contacting API.')
+            raise Exception(str('Failed to contact API.'))
         
     def get_user_data(self, user_id: str):
         """sumary_line
@@ -109,6 +110,75 @@ class brownieGate:
                     return True, result
                 else:
                     return False, ''
+            else:
+                raise Exception(str('Failed to contact API.'))
+                
+        except Exception as e:
+            raise Exception(str(e))
+        
+    def generate_cookie(self, user_id: str):
+        """sumary_line
+        
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+        try:
+            validate_url = f'{self.base_url}/api/generate_cookie'
+            response = requests.post(validate_url, headers=self.base_headers, params={
+                'user_id': user_id
+            })
+            
+            if response.status_code == 200:
+                result = response.json()
+                if result.get('success') == True:
+                    fernet = Fernet(self.encryption_key.encode())
+                    cookie = fernet.encrypt(result.get('cookie').encode())
+                    return cookie
+                else:
+                    return None
+            else:
+                raise Exception(str('Failed to contact API.'))
+            
+        except Exception as e:
+            raise Exception(str(e))
+        
+    def decrypt_cookie(self, cookie: str):
+        """sumary_line
+        
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+        try:
+            fernet = Fernet(self.encryption_key.encode())
+            data = ast.literal_eval(fernet.decrypt(cookie).decode())
+            return data.get('user_id'), data.get('hash')
+        except Exception as e:
+            raise Exception(str(e))
+        
+    def validate_cookie(self, user_id: str, cookie_hash: str):
+        """sumary_line
+        
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+        try:
+            validate_url = f'{self.base_url}/api/validate_cookie'
+            response = requests.post(validate_url, headers=self.base_headers, params={
+                'user_id': user_id,
+                'cookie_hash': cookie_hash
+            })
+            
+            if response.status_code == 200:
+                result = response.json()
+                if result.get('success'):
+                    return True
+                else:
+                    return False
+            else:
+                raise Exception(str('Failed to contact API.'))
                 
         except Exception as e:
             raise Exception(str(e))
