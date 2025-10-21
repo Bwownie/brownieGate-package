@@ -20,7 +20,7 @@ class brownieGate:
         base_headers (dict): Default headers used in all requests.
     """
 
-    def __init__(self, api_key: str, project_uuid: str, encryption_key: str, url: str = 'http://your-api-url.com'):
+    def __init__(self, api_key: str, project_uuid: str, encryption_key: str, url: str):
         """
         Initialize the brownieGate client with credentials and connection info.
 
@@ -28,7 +28,7 @@ class brownieGate:
             api_key (str): API key provided by the service.
             project_uuid (str): UUID identifying your project.
             encryption_key (str): Encryption key used for Fernet encryption/decryption.
-            url (str, optional): Base URL of the API (default: 'http://your-api-url.com')
+            url (str, optional): Base URL of the API.
         """
         self.api_key = api_key
         self.project_uuid = project_uuid
@@ -178,6 +178,25 @@ class brownieGate:
                 else:
                     return False
             else:
+                raise Exception(str('Failed to contact API.'))
+                
+        except Exception as e:
+            raise Exception(str(e))
+        
+    def remove_cookie(self, user_id: str):
+        """sumary_line
+        
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+        try:
+            validate_url = f'{self.base_url}/api/remove_cookie'
+            response = requests.post(validate_url, headers=self.base_headers, params={
+                'user_id': user_id
+            })
+            
+            if response.status_code != 200:
                 raise Exception(str('Failed to contact API.'))
                 
         except Exception as e:
