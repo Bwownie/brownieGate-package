@@ -76,7 +76,7 @@ class brownieGate:
         if token_time < now - timedelta(minutes=1):
             return False, ''
 
-        validate_url = f'{self.base_url}/api/validate'
+        validate_url = f'{self.base_url}/api/user/validate'
         response = requests.post(validate_url, headers=self.base_headers, params={
             'code': decrypted_payload.get('code'),
         })
@@ -98,7 +98,7 @@ class brownieGate:
         Return: return_description
         """
         try:
-            validate_url = f'{self.base_url}/api/get_user_data'
+            validate_url = f'{self.base_url}/api/user/get_data'
             response = requests.post(validate_url, headers=self.base_headers, params={
                 'user_id': user_id
             })
@@ -124,7 +124,7 @@ class brownieGate:
         Return: return_description
         """
         try:
-            validate_url = f'{self.base_url}/api/generate_cookie'
+            validate_url = f'{self.base_url}/api/cookie/generate'
             response = requests.post(validate_url, headers=self.base_headers, params={
                 'user_id': user_id
             })
@@ -165,7 +165,7 @@ class brownieGate:
         Return: return_description
         """
         try:
-            validate_url = f'{self.base_url}/api/validate_cookie'
+            validate_url = f'{self.base_url}/api/cookie/validate'
             response = requests.post(validate_url, headers=self.base_headers, params={
                 'user_id': user_id,
                 'cookie_hash': cookie_hash
@@ -191,7 +191,7 @@ class brownieGate:
         Return: return_description
         """
         try:
-            validate_url = f'{self.base_url}/api/remove_cookie'
+            validate_url = f'{self.base_url}/api/cookie/remove'
             response = requests.post(validate_url, headers=self.base_headers, params={
                 'user_id': user_id
             })
