@@ -76,8 +76,8 @@ class brownieGate:
         if token_time < now - timedelta(minutes=1):
             return False, ''
 
-        validate_url = f'{self.base_url}/api/user/validate'
-        response = requests.post(validate_url, headers=self.base_headers, params={
+        url = f'{self.base_url}/api/user/validate'
+        response = requests.post(url, headers=self.base_headers, params={
             'code': decrypted_payload.get('code'),
         })
 
@@ -98,8 +98,8 @@ class brownieGate:
         Return: return_description
         """
         try:
-            validate_url = f'{self.base_url}/api/user/get_data'
-            response = requests.post(validate_url, headers=self.base_headers, params={
+            url = f'{self.base_url}/api/user/get_data'
+            response = requests.post(url, headers=self.base_headers, params={
                 'user_id': user_id
             })
             
@@ -124,8 +124,8 @@ class brownieGate:
         Return: return_description
         """
         try:
-            validate_url = f'{self.base_url}/api/cookie/generate'
-            response = requests.post(validate_url, headers=self.base_headers, params={
+            url = f'{self.base_url}/api/cookie/generate'
+            response = requests.post(url, headers=self.base_headers, params={
                 'user_id': user_id
             })
             
@@ -165,8 +165,8 @@ class brownieGate:
         Return: return_description
         """
         try:
-            validate_url = f'{self.base_url}/api/cookie/validate'
-            response = requests.post(validate_url, headers=self.base_headers, params={
+            url = f'{self.base_url}/api/cookie/validate'
+            response = requests.post(url, headers=self.base_headers, params={
                 'user_id': user_id,
                 'cookie_hash': cookie_hash
             })
@@ -191,12 +191,37 @@ class brownieGate:
         Return: return_description
         """
         try:
-            validate_url = f'{self.base_url}/api/cookie/remove'
-            response = requests.post(validate_url, headers=self.base_headers, params={
+            url = f'{self.base_url}/api/cookie/remove'
+            response = requests.post(url, headers=self.base_headers, params={
                 'user_id': user_id
             })
             
             if response.status_code != 200:
+                raise Exception(str('Failed to contact API.'))
+                
+        except Exception as e:
+            raise Exception(str(e))
+        
+    def get_pfp(self, user_id: str):
+        """sumary_line
+        
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+        try:
+            url = f'{self.base_url}/api/user/get_pfp'
+            response = requests.post(url, headers=self.base_headers, params={
+                'user_id': user_id
+            })
+            
+            if response.status_code == 200:
+                result = response.json()
+                if result.get('success'):
+                    return result.get('pfp')
+                else:
+                    return False
+            else:
                 raise Exception(str('Failed to contact API.'))
                 
         except Exception as e:
