@@ -20,7 +20,7 @@ class brownieGate:
         base_headers (dict): Default headers used in all requests.
     """
 
-    def __init__(self, api_key: str, project_uuid: str, encryption_key: str, url: str):
+    def __init__(self, api_key: str, project_uuid: str, encryption_key: str, url: str, debug=False):
         """
         Initialize the brownieGate client with credentials and connection info.
 
@@ -30,6 +30,7 @@ class brownieGate:
             encryption_key (str): Encryption key used for Fernet encryption/decryption.
             url (str, optional): Base URL of the API.
         """
+        self.debug = debug
         self.api_key = api_key
         self.project_uuid = project_uuid
         self.encryption_key = encryption_key
@@ -75,6 +76,9 @@ class brownieGate:
             return False, ''
         if token_time < now - timedelta(minutes=1):
             return False, ''
+        
+        if self.debug:
+            print('Pinging validate user')
 
         url = f'{self.base_url}/api/user/validate'
         response = requests.post(url, headers=self.base_headers, params={
@@ -98,6 +102,8 @@ class brownieGate:
         Return: return_description
         """
         try:
+            if self.debug:
+                print('Pinging get user data')
             url = f'{self.base_url}/api/user/get_data'
             response = requests.post(url, headers=self.base_headers, params={
                 'user_id': user_id
@@ -124,6 +130,8 @@ class brownieGate:
         Return: return_description
         """
         try:
+            if self.debug:
+                print('Pinging generate cookie')
             url = f'{self.base_url}/api/cookie/generate'
             response = requests.post(url, headers=self.base_headers, params={
                 'user_id': user_id
@@ -165,6 +173,8 @@ class brownieGate:
         Return: return_description
         """
         try:
+            if self.debug:
+                print('Pinging validating cookie')
             url = f'{self.base_url}/api/cookie/validate'
             response = requests.post(url, headers=self.base_headers, params={
                 'user_id': user_id,
@@ -191,6 +201,8 @@ class brownieGate:
         Return: return_description
         """
         try:
+            if self.debug:
+                print('Pinging remove cookie')
             url = f'{self.base_url}/api/cookie/remove'
             response = requests.post(url, headers=self.base_headers, params={
                 'user_id': user_id
@@ -210,6 +222,8 @@ class brownieGate:
         Return: return_description
         """
         try:
+            if self.debug:
+                print('Pinging get user pfp')
             url = f'{self.base_url}/api/user/get_pfp'
             response = requests.post(url, headers=self.base_headers, params={
                 'user_id': user_id
