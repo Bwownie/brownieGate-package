@@ -23,7 +23,7 @@ class brownieGate:
         debug (bool): If True, prints debug messages during requests.
     """
 
-    def __init__(self, api_key: str, project_uuid: str, encryption_key: str, url: str, debug=False):
+    def __init__(self, api_key: str, project_uuid: str, encryption_key: str, url: str = 'browniegate.xyz', debug: bool = False):
         """
         Initialize the brownieGate client with credentials and connection info.
 
