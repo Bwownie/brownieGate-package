@@ -2,7 +2,7 @@ import requests
 import json
 from cryptography.fernet import Fernet
 from urllib.parse import unquote
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import ast
 
 
@@ -82,7 +82,10 @@ class BrownieClient:
             Exception: If communication with the API fails.
         """
         token_time = datetime.fromisoformat(decrypted_payload.get('timestamp'))
-        now = datetime.now()
+        if token_time.tzinfo is None:
+            token_time = token_time.replace(tzinfo=timezone.utc)
+
+        now = datetime.now(timezone.utc)
 
         if token_time > now + timedelta(minutes=1):
             return False, ''
