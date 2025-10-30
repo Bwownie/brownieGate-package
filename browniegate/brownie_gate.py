@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 import ast
 
 
-class brownieGate:
+class brownieClient:
     """
     brownieGate API Client
     
