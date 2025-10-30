@@ -1,1 +1,1 @@
-from .brownie_gate import brownieClient
+from .brownie_gate import BrownieClient
