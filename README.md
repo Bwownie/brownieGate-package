@@ -1,7 +1,8 @@
 # 🍫 BrownieGate — Secure Identity Platform
 
 BrownieGate is a **secure, scalable identity and session management platform** for modern web applications.  
-It provides developers with simple, encrypted authentication flows, cookie validation, and user data management — all through a clean, Python-based API client. Get started at https://www.browniegate.xyz/dev/docs
+It provides developers with simple, encrypted authentication flows, cookie validation, and user data management — all through a clean, Python-based API client. 
+Get started at https://www.browniegate.xyz/dev/docs
 ---
 
 ## 🚀 Overview
