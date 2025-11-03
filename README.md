@@ -24,4 +24,4 @@ Our API uses **Fernet symmetric encryption** to ensure that sensitive data is al
 Install the Python SDK with pip:
 
 ```bash
-pip install pip install -U git+https://github.com/Bwownie/brownieGate-package
+pip install -U git+https://github.com/Bwownie/brownieGate-package
