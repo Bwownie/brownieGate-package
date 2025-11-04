@@ -9,7 +9,7 @@ Get started at https://www.browniegate.xyz/dev/docs
 ## 🚀 Overview
 
 BrownieGate handles encryption, validation, and user session management securely.  
-With our official Python SDK (`brownieGate`), you can easily:
+With our official Python SDK (`BrownieGate`), you can easily:
 
 - 🔐 Decrypt and verify user payloads  
 - 👤 Retrieve user information and profile data  
@@ -22,4 +22,4 @@ With our official Python SDK (`brownieGate`), you can easily:
 Install the Python SDK with pip:
 
 ```bash
-pip install -U git+https://github.com/Bwownie/brownieGate-package
+pip install -U git+https://github.com/Bwownie/BrownieGate-package
