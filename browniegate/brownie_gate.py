@@ -285,3 +285,32 @@ class BrownieClient:
                 raise Exception('Failed to contact API.')
         except Exception as e:
             raise Exception(str(e))
+        
+    def remove_user(self, user_id: str):
+        """
+        Remove a user from the system via the API.
+
+        Args:
+            user_id (str): The ID of the user to remove.
+
+        Returns:
+            bool: True if the user was successfully removed, otherwise False.
+
+        Raises:
+            Exception: If communication with the API fails.
+        """
+        try:
+            if self.debug:
+                print('Pinging remove user')
+            url = f'{self.base_url}/api/user/remove'
+            response = requests.post(url, headers=self.base_headers, params={
+                'user_id': user_id
+            })
+            
+            if response.status_code == 200:
+                result = response.json()
+                return bool(result.get('success'))
+            else:
+                raise Exception('Failed to contact API.')
+        except Exception as e:
+            raise Exception(str(e))
